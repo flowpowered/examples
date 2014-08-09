@@ -1,0 +1,28 @@
+root:
+    exit: core:exit
+    example:
+        echo: example:example.echo
+        '=': example:example
+        help:
+            echo: example:example.help.echo
+            echelp: example:example.help.echo
+            '=': example:example.help
+            example:example.help.echo: example:example.help.echo
+        delay: example:example.delay
+        dexit: example:example.dexit
+        dhelp: example:example.dhelp
+        tell: example:example.tell
+        dtell: example:example.dtell
+        multi-argument-flags: example:example.multi-arg-flag
+        repeating-flags: example:example.multi-flag
+        vector: example:vector-test
+    echo: example:example.echo
+    with-override:
+        '=': example:override-test
+        multi-argument-flags: example:example.multi-arg-flag
+        echo: example:example.echo
+    override:
+        set: example:override-test.set
+        '=': example:override-test.control
+        get: example:override-test.get
+        example:override-test.set: example:override-test.set

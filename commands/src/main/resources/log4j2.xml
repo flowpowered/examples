@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <JLineConsole name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss} [%highlight{%-5level}] [%logger{36}] %msg%n"/>
+    </JLineConsole>
+    <RollingFile name="RollingFile" fileName="cmd-example.log" filePattern="cmd-example.%i.log">
+      <PatternLayout pattern="%d{HH:mm:ss} [%-5level] %logger{36} - %msg%n"/>
+      <SizeBasedTriggeringPolicy size="50000" />
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="RollingFile"/>
+    </Root>
+  </Loggers>
+</Configuration>
