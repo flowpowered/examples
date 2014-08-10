@@ -70,6 +70,11 @@ public class TellExecutor implements CompletingCommandExecutor {
         set.add("Grinch");
         set.add("DonRedhorse");
         set.add("narrowtux");
+        set.add("DziNeIT");
+        set.add("AlbireoX");
+        set.add("michcioperz");
+        set.add("The_Lone_Devil");
+        set.add("waterpicker");
         set.add("!ops");
         return set;
     }
