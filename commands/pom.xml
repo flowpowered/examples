@@ -73,28 +73,26 @@
 
   <!-- Build dependencies -->
   <dependencies>
-  	<dependency>
-  		<groupId>com.flowpowered</groupId>
-  		<artifactId>flow-commands</artifactId>
-  		<version>0.1.0-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.logging.log4j</groupId>
-  		<artifactId>log4j-core</artifactId>
-  		<version>2.0-rc2</version>
-  		<!-- this shall never be shaded to the same jar with jline-log4j2-appender -->
-  		<scope>runtime</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>com.github.wolf480pl</groupId>
-  		<artifactId>jline-log4j2-appender</artifactId>
-  		<version>1.0.0-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.logging.log4j</groupId>
-  		<artifactId>log4j-slf4j-impl</artifactId>
-  		<version>2.0-rc2</version>
-  	</dependency>
+    <dependency>
+      <groupId>com.flowpowered</groupId>
+      <artifactId>flow-commands</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.wolf480pl</groupId>
+      <artifactId>jline-log4j2-appender</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.0.1</version>
+    </dependency>
   </dependencies>
   
   <!-- Build configuration -->
@@ -194,6 +192,17 @@
         <version>2.1</version>
         <executions>
           <execution>
+            <configuration>
+              <filters>
+                <filter>
+                  <artifact>com.github.wolf480pl:jline-log4j2-appender</artifact>
+                  <excludes>
+                    <!-- Just to make sure log4j-core's descriptor wins -->
+                    <exclude>META-INF/org/apache/logging/log4j/core/config/plugins/*</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>

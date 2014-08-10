@@ -1,2 +1,0 @@
-#!/bin/sh
-java -cp target/classes:`mvn -o dependency:build-classpath |sed s/\\\\[INFO.*// |tr -d " \\n"` "$@"
