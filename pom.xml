@@ -13,6 +13,8 @@
 	<modules>
         <module>networking</module>
         <module>commands</module>
+        <module>render</module>
+        <module>caustic</module>
 	</modules>
 
     <!-- Dependency repositories -->
