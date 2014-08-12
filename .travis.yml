@@ -1,0 +1,31 @@
+# Source language and JDK version to use
+language: java
+jdk: oraclejdk7
+
+# Compile and package JAR and set build properties
+install: mvn dependency:go-offline
+script: mvn package -DbuildNumber=$TRAVIS_BUILD_NUMBER -DciSystem=travis -Dcommit=${TRAVIS_COMMIT:0:7}
+
+# Perform steps after compilation/test success
+after_success:
+  # Get files for use with build, namely the custom Maven settings.xml
+  - "git clone https://github.com/flow/travis-ci-resources.git target/travis"
+  # Check if commit is not a pull request, if repo is official, and branch is master, generate and deploy artifacts and reports
+  - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == flow/examples ]] && [[ $TRAVIS_BRANCH == master ]] && mvn javadoc:jar source:jar cobertura:cobertura coveralls:cobertura -DserviceJobId=$TRAVIS_JOB_ID deploy --settings target/travis/settings.xml"
+
+# Notification services
+notifications:
+  # Disable build status email notifications, until the issue with forks is fixed
+  email: false
+  webhooks:
+    # Send build information and status to Notifico
+    - http://n.tkte.ch/h/3173/PrfzBX9SzBRUjA6HSoyoMSHj
+
+# Environmental system variables
+env:
+  global:
+    # Make the log output cleaner
+    - TERM=dumb
+    # Super secure, encrypted variables! Ssssh!
+    - secure: "hE7387Y65DjyvstY2eSitXgResQyNiGXqf3//kxvZQKkj5p0aP8hfYUgNZ4SSTuiPabOvcsVkHe7/OyWySp7O7bHTJY/i8VP72Bia2tOfHpz1yuaBgUjzc8/nu68AfEOIqdOW3yiEVkjjRG8cv4VteX2/dcZNpK7/zx69e7jIPQ="
+    - secure: "ih3852bIoI8rdYBksvG9EvCtlwVBx161pYN5lNiKMfMjMZIHlFkwYnnC+JPLg0m2jvaXMy/WnBxQZdkeCfvvAnm0uJcAooCwmjVH5UViw8QA1Xd0Nord2G/hmnFu7w5itJ9eSZpnH5RdW5JNbvfYdNqJBFlKPORuKfvOpXZpcMs="
