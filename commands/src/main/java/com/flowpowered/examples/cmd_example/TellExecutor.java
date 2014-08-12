@@ -72,10 +72,10 @@ public class TellExecutor implements CompletingCommandExecutor {
         set.add("narrowtux");
         set.add("DziNeIT");
         set.add("AlbireoX");
-        set.add("michcioperz");
+        set.add("Michcioperz");
         set.add("The_Lone_Devil");
-        set.add("waterpicker");
-        set.add("!ops");
+        set.add("Waterpicker");
+        set.add("!ops"); // To test the '!' character
         return set;
     }
 
