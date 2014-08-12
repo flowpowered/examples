@@ -30,9 +30,6 @@ import org.spout.renderer.software.InBuffer;
 import org.spout.renderer.software.OutBuffer;
 import org.spout.renderer.software.ShaderImplementation;
 
-/**
- *
- */
 public class LightingFragmentShader extends ShaderImplementation {
     @Override
     public void main(InBuffer in, OutBuffer out) {

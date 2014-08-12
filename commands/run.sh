@@ -1,2 +1,2 @@
 #!/bin/sh
-java -jar target/cmd-example-*.jar "$@"
+java -jar target/commands-*.jar "$@"

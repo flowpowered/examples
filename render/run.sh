@@ -1,2 +1,2 @@
 #!/bin/sh
-java -jar target/render-test-*.jar "$@"
+java -jar target/render-*.jar "$@"

@@ -35,9 +35,6 @@ import org.spout.renderer.software.OutBuffer;
 import org.spout.renderer.software.ShaderImplementation;
 import org.spout.renderer.software.Uniform;
 
-/**
- *
- */
 public class LightingVertexShader extends ShaderImplementation {
     private static final DataFormat[] OUTPUT = {
             new DataFormat(DataType.FLOAT, 4),

@@ -1,2 +1,2 @@
 #!/bin/sh
-java -jar target/networking-test-*.jar "$@"
+java -jar target/networking-*.jar "$@"

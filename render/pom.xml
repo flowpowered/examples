@@ -21,12 +21,12 @@
     <!-- Build properties -->
     <properties>
         <project.root>..</project.root>
-        <mainClass>${project.groupId}.${project.artifactId}.RenderTest</mainClass>
+        <mainClass>${project.groupId}.${project.artifactId}.RenderExample</mainClass>
     </properties>
 
     <!-- Project dependencies -->
     <dependencies>
-        <!-- Transitive -->
+        <!-- Include in final JAR -->
         <dependency>
             <groupId>com.flowpowered</groupId>
             <artifactId>flow-render</artifactId>

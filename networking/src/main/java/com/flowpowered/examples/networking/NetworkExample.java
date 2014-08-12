@@ -30,7 +30,7 @@ import io.netty.channel.ChannelOption;
 
 import com.flowpowered.examples.networking.message.TestMessage;
 
-public class NetworkTest {
+public class NetworkExample {
     public static void main(String[] args) throws InterruptedException {
         final Server server = new Server();
         final Client client = new Client();

@@ -54,7 +54,7 @@ import com.flowpowered.commands.syntax.DefaultSyntax;
 import com.flowpowered.commands.syntax.RegexSyntax;
 import com.flowpowered.commands.syntax.Syntax;
 
-public class CommandTest {
+public class CommandExample {
     private Logger logger = LogManager.getLogger("System");
     private ConfigurableCommandManager manager;
     private Configuration config;
@@ -64,11 +64,11 @@ public class CommandTest {
     private ExampleCommandProvider exampleProvider;
     private Syntax cmdSyntax;
 
-    public CommandTest() throws ConfigurationException {
+    public CommandExample() throws ConfigurationException {
         this(DefaultSyntax.INSTANCE);
     }
 
-    public CommandTest(Syntax cmdSyntax) throws ConfigurationException {
+    public CommandExample(Syntax cmdSyntax) throws ConfigurationException {
         this.config = new YamlConfiguration(new File("commands.yml"));
         this.config.load();
         this.manager = new ConfigurableCommandManager(this.config);
@@ -85,12 +85,12 @@ public class CommandTest {
         exit.setExecutor(new CommandExecutor(){
             @Override
             public boolean execute(Command command, CommandSender sender, CommandArguments args) throws CommandException {
-                if (CommandTest.this.console == null) {
-                    CommandTest.this.logger.warn("Issued exit command when console is null");
+                if (CommandExample.this.console == null) {
+                    CommandExample.this.logger.warn("Issued exit command when console is null");
                     return true;
                 }
                 sender.sendMessage("Closing console");
-                CommandTest.this.console.close();
+                CommandExample.this.console.close();
                 sender.sendMessage("Console close request sent");
                 return true;
             }
@@ -112,12 +112,12 @@ public class CommandTest {
             @Override
             public void handleCommand(String command) {
                 try {
-                    CommandTest.this.manager.executeCommand(CommandTest.this.sender, new CommandArguments(command, cmdSyntax));
+                    CommandExample.this.manager.executeCommand(CommandExample.this.sender, new CommandArguments(command, cmdSyntax));
                 } catch (CommandException e) {
                     if (e instanceof UserFriendlyCommandException) {
-                        CommandTest.this.sender.sendErrMessage(e.getMessage());
+                        CommandExample.this.sender.sendErrMessage(e.getMessage());
                     } else {
-                        CommandTest.this.logger.warn("Exception ocurred when executing a command:", e);
+                        CommandExample.this.logger.warn("Exception ocurred when executing a command:", e);
                     }
                 }
             }
@@ -126,10 +126,10 @@ public class CommandTest {
             @Override
             public int complete(String buffer, int cursor, List<CharSequence> candidates) {
                 try {
-                    CommandTest.this.logger.debug("Complete");
-                    return CommandTest.this.manager.getRootCommand().complete(CommandTest.this.sender, new CommandArguments(buffer.toString(), cmdSyntax), cursor, candidates);
+                    CommandExample.this.logger.debug("Complete");
+                    return CommandExample.this.manager.getRootCommand().complete(CommandExample.this.sender, new CommandArguments(buffer.toString(), cmdSyntax), cursor, candidates);
                 } catch (CommandException e) {
-                    CommandTest.this.logger.warn("Exception ocurred when completing a command:", e);
+                    CommandExample.this.logger.warn("Exception ocurred when completing a command:", e);
                 }
                 return -1;
             }
@@ -156,7 +156,7 @@ public class CommandTest {
             }
         }
         try {
-            CommandTest example = new CommandTest(s);
+            CommandExample example = new CommandExample(s);
             example.start();
             try {
                 example.joinConsole();

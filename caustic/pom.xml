@@ -21,18 +21,12 @@
     <!-- Build properties -->
     <properties>
         <project.root>..</project.root>
-        <mainClass>${project.groupId}.${project.artifactId}.CausticTest</mainClass>
+        <mainClass>${project.groupId}.${project.artifactId}.CausticExample</mainClass>
     </properties>
 
     <!-- Project dependencies -->
     <dependencies>
-        <!-- Transitive -->
-        <dependency>
-            <groupId>com.flowpowered</groupId>
-            <artifactId>flow-networking</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+        <!-- Include in final JAR -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>

@@ -26,9 +26,6 @@ package com.flowpowered.examples.caustic;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import com.flowpowered.math.imaginary.Quaternionf;
-import com.flowpowered.math.vector.Vector3f;
-
 import org.spout.renderer.api.Camera;
 import org.spout.renderer.api.GLImplementation;
 import org.spout.renderer.api.GLVersioned.GLVersion;
@@ -49,10 +46,10 @@ import org.spout.renderer.api.util.MeshGenerator;
 import org.spout.renderer.lwjgl.LWJGLUtil;
 import org.spout.renderer.software.SoftwareUtil;
 
-/**
- *
- */
-public class CausticTest {
+import com.flowpowered.math.imaginary.Quaternionf;
+import com.flowpowered.math.vector.Vector3f;
+
+public class CausticExample {
     public static void main(String[] args) throws Exception {
         LWJGLUtil.deployNatives(null);
         // Settings
@@ -60,7 +57,7 @@ public class CausticTest {
         CausticUtil.setDebugEnabled(true);
         final float fps = 60;
         final int windowWidth = 320, windowHeight = 240;
-        final String windowTitle = "CausticTest";
+        final String windowTitle = "CausticExample";
         final float fieldOfView = 60, nearPlane = 0.1f, farPlane = 100;
         final Vector3f parentModelPosition = new Vector3f(0, 0, -5);
         final Vector3f childModelPosition = Vector3f.ONE;
@@ -135,16 +132,16 @@ public class CausticTest {
             case GL30:
                 switch (type) {
                     case VERTEX:
-                        return new ShaderSource(CausticTest.class.getResourceAsStream("/shaders/glsl120/lighting.vert"));
+                        return new ShaderSource(CausticExample.class.getResourceAsStream("/shaders/glsl120/lighting.vert"));
                     case FRAGMENT:
-                        return new ShaderSource(CausticTest.class.getResourceAsStream("/shaders/glsl120/lighting.frag"));
+                        return new ShaderSource(CausticExample.class.getResourceAsStream("/shaders/glsl120/lighting.frag"));
                 }
             case GL32:
                 switch (type) {
                     case VERTEX:
-                        return new ShaderSource(CausticTest.class.getResourceAsStream("/shaders/glsl330/lighting.vert"));
+                        return new ShaderSource(CausticExample.class.getResourceAsStream("/shaders/glsl330/lighting.vert"));
                     case FRAGMENT:
-                        return new ShaderSource(CausticTest.class.getResourceAsStream("/shaders/glsl330/lighting.frag"));
+                        return new ShaderSource(CausticExample.class.getResourceAsStream("/shaders/glsl330/lighting.frag"));
                 }
             case SOFTWARE:
                 switch (type) {
