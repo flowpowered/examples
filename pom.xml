@@ -245,6 +245,14 @@
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>2.2.0</version>
+                <configuration>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>${project.root}/src</exclude>
+                            <exclude>${project.root}/target</exclude>
+                        </excludes>
+                    </instrumentation>
+                </configuration>
             </plugin>
             <!-- Cobertura test coverage plugin -->
             <plugin>
