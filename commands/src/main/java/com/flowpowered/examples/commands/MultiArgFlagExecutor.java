@@ -1,7 +1,7 @@
 /*
  * This file is part of Flow Commands Example, licensed under the MIT License (MIT).
  *
- * Copyright (c) 2014 Spout LLC <http://www.spout.org/>
+ * Copyright (c) 2014 Spout LLC <https://spout.org/>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flowpowered.examples.cmd_example;
+package com.flowpowered.examples.commands;
 
 import java.util.List;
+import java.util.Map;
 
 import com.flowpowered.commands.Command;
 import com.flowpowered.commands.CommandArguments;
@@ -32,53 +33,51 @@ import com.flowpowered.commands.flags.CommandFlags;
 import com.flowpowered.commands.flags.Flag;
 import com.flowpowered.commands.CommandSender;
 import com.flowpowered.commands.CompletingCommandExecutor;
+import com.flowpowered.commands.InvalidCommandArgumentException;
 
-public class HelpExecutor implements CompletingCommandExecutor {
-    private static final String FLAGS_ARGNAME = "helpOpts";
-    private String message;
-
-    public HelpExecutor(String message) {
-        this.message = message;
-    }
-
+public class MultiArgFlagExecutor implements CompletingCommandExecutor {
     @Override
     public boolean execute(Command command, CommandSender sender, CommandArguments args) throws CommandException {
-        CommandFlags flags = args.getFlags(FLAGS_ARGNAME);
-        if (flags == null) {
-            flags = args.popFlags(FLAGS_ARGNAME, prepareFlags());
-        }
-
-        if (flags.getFlag('V').isPresent()) {
-            sender.sendMessage("version 0.0.1-derp3-SNAPSHOT+homeBuilt.42");
-            return true;
-        }
-
-        if (args.hasMore() && !args.currentArgument(CommandArguments.SUBCOMMAND_ARGNAME + args.getDepth(), true, true).isEmpty()) {
-            return false;
-        }
-
-        if (flags.getFlag('l').isPresent()) {
-            sender.sendMessage("------ HELP ------");
-            sender.sendMessage("Here's the deal:");
-        }
-
-        sender.sendMessage(this.message);
-
-        if (flags.getFlag('l').isPresent()) {
-            sender.sendMessage("That's about it!");
-            sender.sendMessage("------------------");
+        CommandFlags flags = prepareFlags();
+        args.popFlags("flags", flags);
+        for (Map.Entry<String, Flag> entry : flags.getLongFlags().entrySet()) {
+            if (!entry.getValue().isPresent()) {
+                continue;
+            }
+            StringBuilder sb = new StringBuilder();
+            CommandArguments fargs = entry.getValue().getArgs();
+            sb.append(entry.getKey()).append(":");
+            if (fargs != null) {
+                while (fargs.hasNext("asdadfas")) {
+                    sb.append(" ");
+                    sb.append(fargs.popString("asdadfas"));
+                }
+            }
+            sender.sendMessage(sb.toString());
         }
         return true;
     }
 
     @Override
     public int complete(Command command, CommandSender sender, CommandArguments args, int cursor, List<String> candidates) {
-        return -2;
+        CommandFlags flags = prepareFlags();
+        try {
+            return args.completeFlags(command, sender, "flags", flags, cursor, candidates);
+        } catch (InvalidCommandArgumentException e) {
+            return -1;
+        }
     }
 
     private CommandFlags prepareFlags() {
         return new CommandFlags()
-        .add(new Flag(new String[]{"long", "verbose"}, new char[]{'l', 'v'}, 0, 0))
-        .b("version", 'V');
+            .f(0, 3, "alpha", 'a')
+            .f(0, 3, "bravo",'b')
+            .f(0, 3, "charlie", 'c')
+            .f(0, 3, "delta", 'd')
+            .f(0, 3, "echo")
+            .f(0, 3, "foxtrot")
+            .f(0, 3, "golf")
+            .f(0, 3, "hotel")
+            .f(0, 3, "juliet");
     }
 }

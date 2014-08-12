@@ -1,7 +1,7 @@
 /*
  * This file is part of Flow Commands Example, licensed under the MIT License (MIT).
  *
- * Copyright (c) 2014 Spout LLC <http://www.spout.org/>
+ * Copyright (c) 2014 Spout LLC <https://spout.org/>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flowpowered.examples.cmd_example;
+package com.flowpowered.examples.commands;
 
 import java.util.Collections;
 import java.util.Set;
@@ -39,7 +39,7 @@ import com.flowpowered.permissions.PermissionDomain;
 public class ConsoleCommandSender implements CommandSender {
     private final Logger logger;
     private final CommandManager manager;
-    
+   
     public static final String MSG_TYPE_ERR = "error" ;
 
     public ConsoleCommandSender(CommandManager manager) {
@@ -98,21 +98,20 @@ public class ConsoleCommandSender implements CommandSender {
 
     @Override
     public void sendMessageRaw(String message, String type) {
-    	// This part can be on the other end of any kind of wire (i.e. on the client side).
-    	if (type == MSG_TYPE_ERR) {
-    		this.logger.error(message);
-    	} else {
-    		this.logger.info(message);
-    	}
+        // This part can be on the other end of any kind of wire (i.e. on the client side).
+        if (type == MSG_TYPE_ERR) {
+            this.logger.error(message);
+        } else {
+            this.logger.info(message);
+        }
     }
 
     @Override
     public void processCommand(CommandArguments commandLine) throws CommandException {
         this.manager.executeCommand(this, commandLine);
     }
-    
+   
     public void sendErrMessage(String message) {
-    	sendMessageRaw(message, MSG_TYPE_ERR);
+        sendMessageRaw(message, MSG_TYPE_ERR);
     }
-
 }

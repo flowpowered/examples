@@ -1,7 +1,7 @@
 /*
  * This file is part of Flow Commands Example, licensed under the MIT License (MIT).
  *
- * Copyright (c) 2014 Spout LLC <http://www.spout.org/>
+ * Copyright (c) 2014 Spout LLC <https://spout.org/>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flowpowered.examples.cmd_example;
+package com.flowpowered.examples.commands;
 
 import java.io.File;
 import java.util.List;
@@ -31,9 +31,9 @@ import jline.console.completer.Completer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import org.spout.cereal.config.Configuration;
-import org.spout.cereal.config.ConfigurationException;
-import org.spout.cereal.config.yaml.YamlConfiguration;
+import com.flowpowered.cerealization.config.Configuration;
+import com.flowpowered.cerealization.config.ConfigurationException;
+import com.flowpowered.cerealization.config.yaml.YamlConfiguration;
 
 import com.flowpowered.commons.console.CommandCallback;
 import com.flowpowered.commons.console.JLineConsole;
@@ -54,7 +54,7 @@ import com.flowpowered.commands.syntax.DefaultSyntax;
 import com.flowpowered.commands.syntax.RegexSyntax;
 import com.flowpowered.commands.syntax.Syntax;
 
-public class CommandExample {
+public class CommandTest {
     private Logger logger = LogManager.getLogger("System");
     private ConfigurableCommandManager manager;
     private Configuration config;
@@ -64,11 +64,11 @@ public class CommandExample {
     private ExampleCommandProvider exampleProvider;
     private Syntax cmdSyntax;
 
-    public CommandExample() throws ConfigurationException {
+    public CommandTest() throws ConfigurationException {
         this(DefaultSyntax.INSTANCE);
     }
 
-    public CommandExample(Syntax cmdSyntax) throws ConfigurationException {
+    public CommandTest(Syntax cmdSyntax) throws ConfigurationException {
         this.config = new YamlConfiguration(new File("commands.yml"));
         this.config.load();
         this.manager = new ConfigurableCommandManager(this.config);
@@ -85,12 +85,12 @@ public class CommandExample {
         exit.setExecutor(new CommandExecutor(){
             @Override
             public boolean execute(Command command, CommandSender sender, CommandArguments args) throws CommandException {
-                if (CommandExample.this.console == null) {
-                    CommandExample.this.logger.warn("Issued exit command when console is null");
+                if (CommandTest.this.console == null) {
+                    CommandTest.this.logger.warn("Issued exit command when console is null");
                     return true;
                 }
                 sender.sendMessage("Closing console");
-                CommandExample.this.console.close();
+                CommandTest.this.console.close();
                 sender.sendMessage("Console close request sent");
                 return true;
             }
@@ -112,12 +112,12 @@ public class CommandExample {
             @Override
             public void handleCommand(String command) {
                 try {
-                    CommandExample.this.manager.executeCommand(CommandExample.this.sender, new CommandArguments(command, cmdSyntax));
+                    CommandTest.this.manager.executeCommand(CommandTest.this.sender, new CommandArguments(command, cmdSyntax));
                 } catch (CommandException e) {
                     if (e instanceof UserFriendlyCommandException) {
-                        CommandExample.this.sender.sendErrMessage(e.getMessage());
+                        CommandTest.this.sender.sendErrMessage(e.getMessage());
                     } else {
-                        CommandExample.this.logger.warn("Exception ocurred when executing a command:", e);
+                        CommandTest.this.logger.warn("Exception ocurred when executing a command:", e);
                     }
                 }
             }
@@ -126,10 +126,10 @@ public class CommandExample {
             @Override
             public int complete(String buffer, int cursor, List<CharSequence> candidates) {
                 try {
-                    CommandExample.this.logger.debug("Complete");
-                    return CommandExample.this.manager.getRootCommand().complete(CommandExample.this.sender, new CommandArguments(buffer.toString(), cmdSyntax), cursor, candidates);
+                    CommandTest.this.logger.debug("Complete");
+                    return CommandTest.this.manager.getRootCommand().complete(CommandTest.this.sender, new CommandArguments(buffer.toString(), cmdSyntax), cursor, candidates);
                 } catch (CommandException e) {
-                    CommandExample.this.logger.warn("Exception ocurred when completing a command:", e);
+                    CommandTest.this.logger.warn("Exception ocurred when completing a command:", e);
                 }
                 return -1;
             }
@@ -156,7 +156,7 @@ public class CommandExample {
             }
         }
         try {
-            CommandExample example = new CommandExample(s);
+            CommandTest example = new CommandTest(s);
             example.start();
             try {
                 example.joinConsole();
@@ -168,5 +168,4 @@ public class CommandExample {
             LogManager.getLogger("main").catching(t);
         }
     }
-
 }

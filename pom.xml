@@ -1,21 +1,66 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.flowpowered.examples</groupId>
-	<artifactId>examples</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <!-- Project information -->
+    <name>Flow Examples</name>
+    <groupId>com.flowpowered.examples</groupId>
+    <artifactId>examples-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <inceptionYear>2014</inceptionYear>
+    <url>http://flowpowered.com</url>
+    <description>Examples using libraries in the Flow collection.</description>
 
-	<name>examples</name>
-
-	<!-- Project modules -->
-	<modules>
-        <module>networking</module>
-        <module>commands</module>
-        <module>render</module>
+    <!-- Project modules -->
+    <modules>
         <module>caustic</module>
-	</modules>
+        <module>commands</module>
+        <module>networking</module>
+        <module>render</module>
+    </modules>
+
+    <!-- Build properties -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.root>.</project.root>
+        <buildNumber>0</buildNumber>
+        <ciSystem>unknown</ciSystem>
+        <commit>unknown</commit>
+    </properties>
+
+    <!-- License information -->
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://tldrlegal.com/license/mit-license</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Organization information -->
+    <organization>
+        <name>Spout LLC</name>
+        <url>https://spout.org</url>
+    </organization>
+
+    <!-- Source code access -->
+    <scm>
+        <connection>scm:git:git://github.com/flow/examples.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:flow/examples.git</developerConnection>
+        <url>https://github.com/flow/examples</url>
+    </scm>
+
+    <!-- Continuous integration -->
+    <ciManagement>
+        <system>travis</system>
+        <url>https://travis-ci.org/flow/examples</url>
+    </ciManagement>
+
+    <!-- Issue management -->
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/flow/examples/issues</url>
+    </issueManagement>
 
     <!-- Dependency repositories -->
     <repositories>
@@ -49,4 +94,129 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <!-- Build configuration -->
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+
+        <!-- Resources to include -->
+        <resources>
+            <!-- Static resources -->
+            <resource>
+                <filtering>false</filtering>
+                <directory>${project.root}</directory>
+                <targetPath>.</targetPath>
+                <includes>
+                    <include>LICENSE.txt</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <!-- Build plugins -->
+        <plugins>
+            <!-- License header plugin -->
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.10.b1</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <properties>
+                                <project>${project.name}</project>
+                                <year>${project.inceptionYear}</year>
+                                <name>${project.organization.name}</name>
+                                <url>${project.organization.url}</url>
+                            </properties>
+                            <quiet>true</quiet>
+                            <encoding>UTF-8</encoding>
+                            <strictCheck>true</strictCheck>
+                            <header>${project.root}/HEADER.txt</header>
+                            <mapping>
+                                <java>SLASHSTAR_STYLE</java>
+                            </mapping>
+                            <keywords>
+                                <keyword>${project.name}</keyword>
+                                <keyword>license</keyword>
+                            </keywords>
+                            <includes>
+                                <include>src/main/java/**</include>
+                                <include>src/test/java/**</include>
+                            </includes>
+                        </configuration>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Source compiler plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <compilerArguments>
+                        <O>-Xlint:all</O>
+                        <O>-Xlint:-path</O>
+                    </compilerArguments>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+            <!-- JAR creation plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}+${ciSystem}-b${buildNumber}.git-${commit}</Implementation-Version>
+                            <Implementation-Vendor>${project.organization.name} - ${project.organization.url}</Implementation-Vendor>
+                            <Main-Class>${mainClass}</Main-Class>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- Javadoc creation plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <author>false</author>
+                    <version>false</version>
+                </configuration>
+            </plugin>
+            <!-- Surefire test plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                </configuration>
+            </plugin>
+            <!-- Coveralls reporting plugin  -->
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>2.2.0</version>
+            </plugin>
+            <!-- Cobertura test coverage plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <format>xml</format>
+                    <maxmem>256m</maxmem>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

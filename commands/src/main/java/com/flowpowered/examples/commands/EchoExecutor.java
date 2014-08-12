@@ -1,7 +1,7 @@
 /*
  * This file is part of Flow Commands Example, licensed under the MIT License (MIT).
  *
- * Copyright (c) 2014 Spout LLC <http://www.spout.org/>
+ * Copyright (c) 2014 Spout LLC <https://spout.org/>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,59 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flowpowered.examples.cmd_example;
+package com.flowpowered.examples.commands;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.TreeSet;
 
 import com.flowpowered.commands.Command;
 import com.flowpowered.commands.CommandArguments;
 import com.flowpowered.commands.CommandException;
 import com.flowpowered.commands.CommandSender;
 import com.flowpowered.commands.CompletingCommandExecutor;
-import com.flowpowered.commands.InvalidCommandArgumentException;
-import com.flowpowered.commands.flags.CommandFlags;
-import com.flowpowered.commands.flags.MultiFlag;
 
-public class MultiFlagExecutor implements CompletingCommandExecutor {
-
+public class EchoExecutor implements CompletingCommandExecutor {
     @Override
     public boolean execute(Command command, CommandSender sender, CommandArguments args) throws CommandException {
-        CommandFlags flags = prepareFlags();
-        args.popFlags("flags", flags);
-        
-        StringBuilder builder = new StringBuilder();
-        MultiFlag a = (MultiFlag) flags.getFlag('a');
-        builder.append("a:").append(a.getTimesPresent()).append(':');
-        for (CommandArguments fargs : a.getAllArgs()) {
-            builder.append(fargs.popString("aarg", "")).append(';');
-        }
-        sender.sendMessage(builder.toString());
-        
-        builder = new StringBuilder();
-        MultiFlag b = (MultiFlag) flags.getFlag('b');
-        builder.append("b:").append(b.getTimesPresent()).append(':');
-        for (CommandArguments fargs : b.getAllArgs()) {
-            builder.append(fargs.popString("barg", "")).append(';');
-        }
-        sender.sendMessage(builder.toString());
-                
+        sender.sendMessage(args.popRemainingStrings("message"));
         return true;
     }
 
     @Override
     public int complete(Command command, CommandSender sender, CommandArguments args, int cursor, List<String> candidates) {
-        CommandFlags flags = prepareFlags();
-        try {
-            return args.completeFlags(command, sender, "flags", flags, cursor, candidates);
-        } catch (InvalidCommandArgumentException e) {
-            return -1;
-        }
+        TreeSet<String> set = new TreeSet<>(Arrays.asList(""));
+        return args.complete("message", cursor, set, candidates);
     }
-
-    private CommandFlags prepareFlags() {
-        return new CommandFlags()
-                .add(new MultiFlag(new String[0], new char[]{'a'}, 0, 1))
-                .add(new MultiFlag(new String[0], new char[]{'b'}, 0, 1));
-    }
-
 }

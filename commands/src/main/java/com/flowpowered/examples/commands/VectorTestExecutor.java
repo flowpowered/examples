@@ -1,7 +1,7 @@
 /*
  * This file is part of Flow Commands Example, licensed under the MIT License (MIT).
  *
- * Copyright (c) 2014 Spout LLC <http://www.spout.org/>
+ * Copyright (c) 2014 Spout LLC <https://spout.org/>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flowpowered.examples.cmd_example;
+package com.flowpowered.examples.commands;
 
 import java.util.List;
 import java.util.Random;
