@@ -1,0 +1,2 @@
+name: exampleplugin
+main: com.flowpowered.examples.plugins.plugin.ExamplePlugin

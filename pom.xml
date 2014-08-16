@@ -17,6 +17,7 @@
         <!--<module>commands</module>-->
         <module>networking</module>
         <module>render</module>
+        <module>plugins</module>
     </modules>
 
     <!-- Build properties -->
