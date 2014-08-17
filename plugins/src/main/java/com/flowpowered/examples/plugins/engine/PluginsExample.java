@@ -30,9 +30,11 @@ import com.flowpowered.plugins.Plugin;
 
 public class PluginsExample {
     public static void main(String[] args) throws IOException, Exception {
-        ExamplePluginManager manager = new ExamplePluginManager();
+        Thread.sleep(1000);
+        PluginsExample ex = new PluginsExample();
+        ExamplePluginManager manager = new ExamplePluginManager(ex);
 
-        Plugin plugin = manager.getPlugin("exampleplugin");
+        Plugin<ExampleContext> plugin = manager.getPlugin("exampleplugin");
         if (plugin == null) {
             System.out.println("exampleplugin is null.");
         } else {
@@ -41,14 +43,16 @@ public class PluginsExample {
         }
 
 
-        Plugin annotated = manager.getPlugin("exampleannotatedplugin");
+        Plugin<ExampleContext> annotated = manager.getPlugin("exampleannotatedplugin");
         if (annotated == null) {
             System.out.println("exampleannotatedplugin is null.");
         } else {
             annotated.enable();
             annotated.disable();
         }
+    }
 
-
+    public void callFromPlugin() {
+        System.out.println("Called from PluginsExample found with ExampleContext");
     }
 }

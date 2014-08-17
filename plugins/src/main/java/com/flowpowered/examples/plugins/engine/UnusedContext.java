@@ -21,31 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flowpowered.examples.plugins.annotated;
+package com.flowpowered.examples.plugins.engine;
 
-import com.flowpowered.examples.plugins.engine.ExampleContext;
-import com.flowpowered.examples.plugins.engine.UnusedContext;
 import com.flowpowered.plugins.Context;
-import com.flowpowered.plugins.annotated.Disable;
-import com.flowpowered.plugins.annotated.Enable;
-import com.flowpowered.plugins.annotated.Plugin;
+import com.flowpowered.plugins.Plugin;
 
-@Plugin(name = "exampleannotatedplugin")
-public class ExampleAnnotatedPlugin {
+public class UnusedContext extends Context {
 
-    @Enable
-    public void onEnable(ExampleContext c) {
-        System.out.println("Enabled: " + c.getPlugin().getName());
-        c.getExample().callFromPlugin();
+    public UnusedContext(Plugin<?> plugin) {
+        super(plugin);
     }
 
-    @Disable
-    public void onDisable(UnusedContext c) {
-        throw new IllegalStateException();
-    }
-
-    @Disable
-    public void onDisable(Context c) {
-        System.out.println("Disabled: " + c.getPlugin().getName());
-    }
 }

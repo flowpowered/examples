@@ -29,18 +29,26 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Paths;
 
+import com.flowpowered.plugins.ContextCreator;
+import com.flowpowered.plugins.Plugin;
 import com.flowpowered.plugins.PluginManager;
 import com.flowpowered.plugins.annotated.AnnotatedPluginLoader;
 import com.flowpowered.plugins.simple.SimplePluginLoader;
 import org.slf4j.LoggerFactory;
 
-public class ExamplePluginManager extends PluginManager {
+public class ExamplePluginManager extends PluginManager<ExampleContext> {
 
-    public ExamplePluginManager() {
+    public ExamplePluginManager(final PluginsExample example) {
         super(LoggerFactory.getLogger(PluginsExample.class));
         try {
-            addLoader(new SimplePluginLoader(new URLClassLoader(new URL[] { Paths.get("target/plugins-0.1.0-SNAPSHOT-test.jar").toUri().toURL() })));
-            addLoader(new AnnotatedPluginLoader(Paths.get("target/classes/com/flowpowered/examples/plugins/annotated/ExampleAnnotatedPlugin.class"), getClass().getClassLoader()));
+            ContextCreator<ExampleContext> cc = new ContextCreator<ExampleContext>() {
+                @Override
+                public ExampleContext createContext(Plugin<ExampleContext> plugin) {
+                    return new ExampleContext(plugin, example);
+                }
+            };
+            addLoader(new SimplePluginLoader<>(cc, new URLClassLoader(new URL[] { Paths.get("target/plugins-0.1.0-SNAPSHOT-test.jar").toUri().toURL() })));
+            addLoader(new AnnotatedPluginLoader<>(cc, Paths.get("target/classes/com/flowpowered/examples/plugins/annotated/ExampleAnnotatedPlugin.class"), getClass().getClassLoader()));
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         }

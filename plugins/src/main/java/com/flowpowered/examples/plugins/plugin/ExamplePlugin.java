@@ -23,13 +23,15 @@
  */
 package com.flowpowered.examples.plugins.plugin;
 
+import com.flowpowered.examples.plugins.engine.ExampleContext;
 import com.flowpowered.plugins.Plugin;
 
-public class ExamplePlugin extends Plugin {
+public class ExamplePlugin extends Plugin<ExampleContext> {
 
     @Override
     protected void onEnable() throws Exception {
         System.out.println("Enabled: plugin");
+        getContext().getExample().callFromPlugin();
     }
 
     @Override
