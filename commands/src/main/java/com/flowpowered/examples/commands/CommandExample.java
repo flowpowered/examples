@@ -31,14 +31,13 @@ import jline.console.completer.Completer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.flowpowered.cerealization.config.Configuration;
-import com.flowpowered.cerealization.config.ConfigurationException;
-import com.flowpowered.cerealization.config.yaml.YamlConfiguration;
-
 import com.flowpowered.commons.console.CommandCallback;
 import com.flowpowered.commons.console.JLineConsole;
 import com.flowpowered.commons.console.Log4j2JLineConsole;
 
+import com.flowpowered.cerealization.config.Configuration;
+import com.flowpowered.cerealization.config.ConfigurationException;
+import com.flowpowered.cerealization.config.yaml.YamlConfiguration;
 import com.flowpowered.commands.Command;
 import com.flowpowered.commands.CommandArguments;
 import com.flowpowered.commands.CommandException;
@@ -47,12 +46,12 @@ import com.flowpowered.commands.CommandProvider;
 import com.flowpowered.commands.CommandSender;
 import com.flowpowered.commands.ConfigurableCommandManager;
 import com.flowpowered.commands.exception.UserFriendlyCommandException;
-import com.flowpowered.commands.syntax.flags.DefaultFlagSyntax;
-import com.flowpowered.commands.syntax.flags.SpoutFlagSyntax;
-import com.flowpowered.commands.syntax.flags.DefaultFlagSyntax.StrictnessMode;
 import com.flowpowered.commands.syntax.DefaultSyntax;
 import com.flowpowered.commands.syntax.RegexSyntax;
 import com.flowpowered.commands.syntax.Syntax;
+import com.flowpowered.commands.syntax.flags.DefaultFlagSyntax;
+import com.flowpowered.commands.syntax.flags.DefaultFlagSyntax.StrictnessMode;
+import com.flowpowered.commands.syntax.flags.SpoutFlagSyntax;
 
 public class CommandExample {
     private Logger logger = LogManager.getLogger("System");
@@ -62,6 +61,7 @@ public class CommandExample {
     private JLineConsole console;
     private CommandProvider coreProvider;
     private ExampleCommandProvider exampleProvider;
+    private AnnotatedCommandProvider annotatedProvider;
     private Syntax cmdSyntax;
 
     public CommandExample() throws ConfigurationException {
@@ -97,11 +97,13 @@ public class CommandExample {
         });
         this.manager.getRootCommand().insertChild("exit", exit);
         this.exampleProvider = new ExampleCommandProvider();
+        this.annotatedProvider = new AnnotatedCommandProvider();
         try {
             this.exampleProvider.init(this.manager);
         } catch (CommandException e) {
             this.logger.error("Could not initialize example command provider", e);
         }
+        this.annotatedProvider.init(manager);
     }
 
     public void start() {

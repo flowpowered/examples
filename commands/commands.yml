@@ -7,7 +7,7 @@ root:
             echo: example:example.help.echo
             echelp: example:example.help.echo
             '=': example:example.help
-            example:example.help.echo: example:example.help.echo
+            tell: annotated:example.tell-help
         delay: example:example.delay
         dexit: example:example.dexit
         dhelp: example:example.dhelp
@@ -16,6 +16,7 @@ root:
         multi-argument-flags: example:example.multi-arg-flag
         repeating-flags: example:example.multi-flag
         vector: example:vector-test
+        annotated:example.echo: annotated:example.echo
     echo: example:example.echo
     with-override:
         '=': example:override-test
@@ -25,4 +26,5 @@ root:
         set: example:override-test.set
         '=': example:override-test.control
         get: example:override-test.get
-        example:override-test.set: example:override-test.set
+    annotated:example.echo: annotated:example.echo
+    tell: annotated:example.tell
