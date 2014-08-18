@@ -46,7 +46,7 @@ public class AnnotatedCommandProvider implements CommandProvider {
         return "annotated";
     }
 
-    @Parent({ "flow:root" })
+    @Parent("flow:root")
     @CommandDescription(name = "example.echo")
     public void echo(CommandSender sender, CommandArguments args) throws CommandException {
         sender.sendMessage(args.popRemainingStrings("message"));
@@ -57,7 +57,7 @@ public class AnnotatedCommandProvider implements CommandProvider {
         sender.sendMessage("[You -> " + args.popString("to") + "] " + args.popRemainingStrings("msg"));
     }
 
-    @Parent(value = { "example:example.help" }, childNames = { "tell" })
+    @Parent(value = "example:example.help", name = "tell")
     @CommandDescription(name = "example.tell-help", autoParent = false)
     public void tellHelp(CommandSender sender, CommandArguments args) throws CommandException {
         sender.sendMessage("example tell <target> <message> - \"sends\" the message to the target user");
