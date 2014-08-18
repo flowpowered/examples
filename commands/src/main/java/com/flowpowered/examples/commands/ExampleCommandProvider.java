@@ -40,32 +40,32 @@ public class ExampleCommandProvider implements CommandProvider {
 
         Command tell = manager.getCommand(this, "example.tell");
         tell.setExecutor(new TellExecutor());
-        example.insertChild("tell", tell);
+        example.addChildIfAbsent("tell", tell);
 
         Command help = manager.getCommand(this, "example.help");
         help.setExecutor(new HelpExecutor("/example help <command> - get help for a command\npossible commands: echo"));
-        example.insertChild("help", help);
+        example.addChildIfAbsent("help", help);
 
         Command helpEcho = manager.getCommand(this, "example.help.echo");
         helpEcho.setExecutor(new HelpExecutor("/example echo <message> - echos a message to the command user"));
-        help.insertChild("echo", helpEcho);
+        help.addChildIfAbsent("echo", helpEcho);
 
         Command delayEcho = manager.getCommand(this, "example.delay");
         delayEcho.setExecutor(new DelayedExecutor(new EchoExecutor(), 500));
-        example.insertChild("delay", delayEcho);
+        example.addChildIfAbsent("delay", delayEcho);
 
         Command delayExit = manager.getCommand(this, "example.dexit");
         Command exit = manager.getCommandByPath("exit");
         delayExit.setExecutor(new DelayedExecutor(exit.getExecutor(), 500));
-        example.insertChild("dexit", delayExit);
+        example.addChildIfAbsent("dexit", delayExit);
 
         Command delayTell = manager.getCommand(this, "example.dtell");
         delayTell.setExecutor(new DelayedExecutor(tell.getExecutor(), 500));
-        example.insertChild("dtell", delayTell);
+        example.addChildIfAbsent("dtell", delayTell);
 
         Command multiArgFlag = manager.getCommand(this, "example.multi-arg-flag");
         multiArgFlag.setExecutor(new MultiArgFlagExecutor());
-        example.insertChild("multi-argument-flags", multiArgFlag);
+        example.addChildIfAbsent("multi-argument-flags", multiArgFlag);
 
         OverrideTestExecutor ote = new OverrideTestExecutor();
 
@@ -78,19 +78,19 @@ public class ExampleCommandProvider implements CommandProvider {
 
         Command overrideTestSet = manager.getCommand(this, "override-test.set");
         overrideTestSet.setExecutor(ote.getSetter());
-        overrideTestControl.insertChild("set", overrideTestSet);
+        overrideTestControl.addChildIfAbsent("set", overrideTestSet);
 
         Command overrideTestGet = manager.getCommand(this, "override-test.get");
         overrideTestGet.setExecutor(ote.getGetter());
-        overrideTestControl.insertChild("get", overrideTestGet);
+        overrideTestControl.addChildIfAbsent("get", overrideTestGet);
 
         Command multiFlag = manager.getCommand(this, "example.multi-flag");
         multiFlag.setExecutor(new MultiFlagExecutor());
-        example.insertChild("repeating-flags", multiFlag);
+        example.addChildIfAbsent("repeating-flags", multiFlag);
 
         Command vecTest = manager.getCommand(this, "vector-test");
         vecTest.setExecutor(new VectorTestExecutor());
-        example.insertChild("vector", vecTest);
+        example.addChildIfAbsent("vector", vecTest);
     }
 
     @Override

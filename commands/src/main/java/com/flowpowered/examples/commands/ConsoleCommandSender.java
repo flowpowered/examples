@@ -39,7 +39,7 @@ import com.flowpowered.permissions.PermissionDomain;
 public class ConsoleCommandSender implements CommandSender {
     private final Logger logger;
     private final CommandManager manager;
-   
+
     public static final String MSG_TYPE_ERR = "error" ;
 
     public ConsoleCommandSender(CommandManager manager) {
@@ -99,7 +99,7 @@ public class ConsoleCommandSender implements CommandSender {
     @Override
     public void sendMessageRaw(String message, String type) {
         // This part can be on the other end of any kind of wire (i.e. on the client side).
-        if (type == MSG_TYPE_ERR) {
+        if (type.equals(MSG_TYPE_ERR)) {
             this.logger.error(message);
         } else {
             this.logger.info(message);
@@ -110,7 +110,7 @@ public class ConsoleCommandSender implements CommandSender {
     public void processCommand(CommandArguments commandLine) throws CommandException {
         this.manager.executeCommand(this, commandLine);
     }
-   
+
     public void sendErrMessage(String message) {
         sendMessageRaw(message, MSG_TYPE_ERR);
     }
