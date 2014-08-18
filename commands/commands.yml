@@ -17,6 +17,7 @@ root:
         repeating-flags: example:example.multi-flag
         vector: example:vector-test
         annotated:example.echo: annotated:example.echo
+        tell-help: annotated:example.tell-help
     echo: example:example.echo
     with-override:
         '=': example:override-test

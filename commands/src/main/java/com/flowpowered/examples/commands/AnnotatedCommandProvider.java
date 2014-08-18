@@ -32,6 +32,7 @@ import com.flowpowered.commands.CommandSender;
 import com.flowpowered.commands.annotated.AnnotatedCommandExecutorFactory;
 import com.flowpowered.commands.annotated.CommandDescription;
 import com.flowpowered.commands.annotated.Parent;
+import com.flowpowered.commands.annotated.Parents;
 
 public class AnnotatedCommandProvider implements CommandProvider {
 
@@ -57,7 +58,7 @@ public class AnnotatedCommandProvider implements CommandProvider {
         sender.sendMessage("[You -> " + args.popString("to") + "] " + args.popRemainingStrings("msg"));
     }
 
-    @Parent(value = "example:example.help", name = "tell")
+    @Parents({ @Parent(value = "example:example.help", name = "tell"), @Parent("example:example") })
     @CommandDescription(name = "example.tell-help", autoParent = false)
     public void tellHelp(CommandSender sender, CommandArguments args) throws CommandException {
         sender.sendMessage("example tell <target> <message> - \"sends\" the message to the target user");
