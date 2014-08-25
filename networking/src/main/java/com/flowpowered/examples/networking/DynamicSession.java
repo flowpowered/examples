@@ -23,6 +23,8 @@
  */
 package com.flowpowered.examples.networking;
 
+import com.flowpowered.networking.Message;
+import com.flowpowered.networking.MessageHandler;
 import io.netty.channel.Channel;
 
 import com.flowpowered.networking.protocol.AbstractProtocol;
@@ -36,5 +38,20 @@ public class DynamicSession extends BasicSession {
     @Override
     public void setProtocol(AbstractProtocol protocol) {
         super.setProtocol(protocol);
+    }
+
+    @Override
+    public void onHandlerThrowable(Message message, MessageHandler<?, ?> handle, Throwable throwable) {
+        throwable.printStackTrace();
+    }
+
+    @Override
+    public void onOutboundThrowable(Throwable throwable) {
+        throwable.printStackTrace();
+    }
+
+    @Override
+    public void onInboundThrowable(Throwable throwable) {
+        throwable.printStackTrace();
     }
 }

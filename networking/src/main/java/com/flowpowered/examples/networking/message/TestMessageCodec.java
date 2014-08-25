@@ -44,6 +44,7 @@ public class TestMessageCodec implements Codec<TestMessage>, MessageHandler<Dyna
         return buf;
     }
 
+    @Override
     public void handle(DynamicSession session, TestMessage message) {
         System.out.println("Received TestMessage with number: " + message.getNumber());
     }

@@ -23,10 +23,7 @@
  */
 package com.flowpowered.examples.networking;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import io.netty.channel.ChannelOption;
 
 import com.flowpowered.examples.networking.message.TestMessage;
 
@@ -36,18 +33,21 @@ public class NetworkExample {
         final Client client = new Client();
         client.run = new Runnable() {
             public void run() {
-                server.session.getChannel().config().setOption(ChannelOption.AUTO_READ, false);
+                //server.session.getChannel().config().setOption(ChannelOption.AUTO_READ, false);
                 client.session.send(new TestMessage(42));
                 client.session.send(new TestMessage(21));
-                server.session.getChannel().read();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ex) {
-                }
+                //server.session.getChannel().read();
                 System.out.println("Read");
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
                 client.session.send(new TestMessage(22));
                 client.session.send(new TestMessage(100040));
+                System.out.println("Setting protocol");
                 client.session.setProtocol(new TestSecondProtocol());
+                server.session.setProtocol(new TestSecondProtocol());
                 client.session.send(new TestMessage(100));
                 System.out.println("All messages sent.");
                 try {

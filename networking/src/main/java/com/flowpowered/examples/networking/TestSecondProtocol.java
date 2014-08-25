@@ -23,21 +23,21 @@
  */
 package com.flowpowered.examples.networking;
 
-import io.netty.buffer.ByteBuf;
-
+import com.flowpowered.examples.networking.message.TestMessage;
+import com.flowpowered.examples.networking.message.TestMessageCodec;
+import com.flowpowered.examples.networking.message.TestMessageHandler;
 import com.flowpowered.networking.Codec;
+import com.flowpowered.networking.Message;
+import com.flowpowered.networking.MessageHandler;
 import com.flowpowered.networking.exception.IllegalOpcodeException;
 import com.flowpowered.networking.exception.UnknownPacketException;
 import com.flowpowered.networking.protocol.simple.SimpleProtocol;
-
-import com.flowpowered.examples.networking.message.AbstractMessageCodec;
-import com.flowpowered.examples.networking.message.AbstractMessageHandler;
-import com.flowpowered.examples.networking.message.NotAbstractMessage;
+import io.netty.buffer.ByteBuf;
 
 public class TestSecondProtocol extends SimpleProtocol {
     public TestSecondProtocol() {
         super("TestProtocol2", 1);
-        registerMessage(NotAbstractMessage.class, AbstractMessageCodec.class, AbstractMessageHandler.class, null);
+        registerMessage(TestMessage.class, TestMessageCodec.class, TestMessageHandler.class, null);
     }
 
     @Override
@@ -56,5 +56,16 @@ public class TestSecondProtocol extends SimpleProtocol {
         header.writeShort(codec.getOpcode());
         header.writeInt(data.writerIndex());
         return header;
+    }
+
+    @Override
+    public <M extends Message> MessageHandler<?, M> getMessageHandle(Class<M> message) {
+        MessageHandler<?, M> handle = super.getMessageHandle(message);
+        if (handle == null) {
+            System.out.println("Null handle");
+            System.out.println(message);
+            System.out.println(getHandlerLookupService());
+        }
+        return handle;
     }
 }

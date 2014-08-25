@@ -30,12 +30,11 @@ import io.netty.channel.Channel;
 import com.flowpowered.networking.NetworkServer;
 import com.flowpowered.networking.protocol.AbstractProtocol;
 import com.flowpowered.networking.protocol.ProtocolRegistry;
-import com.flowpowered.networking.session.BasicSession;
 import com.flowpowered.networking.session.Session;
 
 public class Server extends NetworkServer {
     private ProtocolRegistry<AbstractProtocol> pr = new ProtocolRegistry<AbstractProtocol>();
-    BasicSession session;
+    DynamicSession session;
 
     public Server() {
         bindAndRegister(new InetSocketAddress(65535), new TestProtocol());
@@ -49,7 +48,7 @@ public class Server extends NetworkServer {
     @Override
     public Session newSession(Channel c) {
         System.out.println("Server session created!");
-        return session = new BasicSession(c, pr.getProtocol(c.localAddress()));
+        return session = new DynamicSession(c, pr.getProtocol(c.localAddress()));
     }
 
     @Override

@@ -33,6 +33,8 @@ import com.flowpowered.networking.protocol.simple.SimpleProtocol;
 
 import com.flowpowered.examples.networking.message.TestMessage;
 import com.flowpowered.examples.networking.message.TestMessageCodec;
+import com.flowpowered.networking.Message;
+import com.flowpowered.networking.MessageHandler;
 
 public class TestProtocol extends SimpleProtocol {
     public TestProtocol() {
@@ -56,5 +58,16 @@ public class TestProtocol extends SimpleProtocol {
         header.writeShort(codec.getOpcode());
         header.writeInt(data.writerIndex());
         return header;
+    }
+
+    @Override
+    public <M extends Message> MessageHandler<?, M> getMessageHandle(Class<M> message) {
+        MessageHandler<?, M> handle = super.getMessageHandle(message);
+        if (handle == null) {
+            System.out.println("Null handle");
+            System.out.println(message);
+            System.out.println(getHandlerLookupService());
+        }
+        return handle;
     }
 }

@@ -29,5 +29,6 @@ import com.flowpowered.examples.networking.DynamicSession;
 
 public class TestMessageHandler implements MessageHandler<DynamicSession, TestMessage> {
     public void handle(DynamicSession session, TestMessage message) {
+        System.out.println("Read (2): " + message.getNumber());
     }
 }
