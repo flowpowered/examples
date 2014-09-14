@@ -25,6 +25,7 @@ package com.flowpowered.examples.engine;
 
 import com.flowpowered.api.Engine;
 import com.flowpowered.api.Server;
+import com.flowpowered.api.component.entity.PlayerObserveChunksComponent;
 import com.flowpowered.api.component.entity.PlayerControlledMovementComponent;
 import com.flowpowered.api.entity.Entity;
 import com.flowpowered.api.event.PlayerJoinedEvent;
@@ -64,7 +65,7 @@ public class EngineExample {
         if (e.getPart() instanceof Server) {
             Server s = (Server) e.getPart();
 
-            World loadedWorld = engine.getWorldManager().loadWorld("fallback", new FlatWorldGenerator(BlockMaterial.SOLID_BLUE));
+            World loadedWorld = s.getWorldManager().loadWorld("fallback", new FlatWorldGenerator(BlockMaterial.SOLID_BLUE));
             BoxShape shape = new BoxShape(5, 5, 5) {
                 @Override
                 public int getNbSimilarCreatedShapes() {
@@ -86,6 +87,9 @@ public class EngineExample {
 
         player.setTransformProvider(testEntity.getPhysics());
         testEntity.add(PlayerControlledMovementComponent.class).setController(player);
+        PlayerObserveChunksComponent comp = testEntity.add(PlayerObserveChunksComponent.class);
+        engine.getEventManager().registerEvents(comp, this);
+        comp.setController(player);
     }
 
     public Entity getTestEntity() {
