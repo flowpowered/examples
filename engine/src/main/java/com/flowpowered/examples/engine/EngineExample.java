@@ -25,8 +25,8 @@ package com.flowpowered.examples.engine;
 
 import com.flowpowered.api.Engine;
 import com.flowpowered.api.Server;
-import com.flowpowered.api.component.entity.PlayerObserveChunksComponent;
 import com.flowpowered.api.component.entity.PlayerControlledMovementComponent;
+import com.flowpowered.api.component.entity.PlayerObserveChunksComponent;
 import com.flowpowered.api.entity.Entity;
 import com.flowpowered.api.event.PlayerJoinedEvent;
 import com.flowpowered.api.event.engine.EnginePartAddedEvent;
@@ -36,6 +36,7 @@ import com.flowpowered.api.geo.World;
 import com.flowpowered.api.material.BlockMaterial;
 import com.flowpowered.api.player.Player;
 import com.flowpowered.api.plugins.FlowContext;
+import com.flowpowered.engine.geo.world.FlowWorld;
 import com.flowpowered.events.EventHandler;
 import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.plugins.annotated.Disable;
@@ -66,16 +67,16 @@ public class EngineExample {
             Server s = (Server) e.getPart();
 
             World loadedWorld = s.getWorldManager().loadWorld("fallback", new FlatWorldGenerator(BlockMaterial.SOLID_BLUE));
-            BoxShape shape = new BoxShape(5, 5, 5) {
+            BoxShape shape = new BoxShape(1, 2, 1) {
                 @Override
                 public int getNbSimilarCreatedShapes() {
                     return 1;
                 }
             };
             @SuppressWarnings("unchecked")
-            Entity entity = loadedWorld.spawnEntity(Vector3f.ZERO.add(0, 10, 0), LoadOption.LOAD_GEN);
+            Entity entity = loadedWorld.spawnEntity(Vector3f.ZERO.add(0, 15, 0), LoadOption.LOAD_GEN);
             entity.getObserver().setObserver(true);
-            //entity.getPhysics().activate(50, shape);
+            ((FlowWorld) loadedWorld).getPhysicsManager().queuePreUpdateTask((w) -> entity.getPhysics().activate(50, shape, w));
             this.testEntity = entity;
         }
     }
