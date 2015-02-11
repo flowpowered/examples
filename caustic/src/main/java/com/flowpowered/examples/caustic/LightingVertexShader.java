@@ -23,17 +23,16 @@
  */
 package com.flowpowered.examples.caustic;
 
+import com.flowpowered.caustic.api.data.VertexAttribute.DataType;
+import com.flowpowered.caustic.api.gl.Shader.ShaderType;
+import com.flowpowered.caustic.software.DataFormat;
+import com.flowpowered.caustic.software.InBuffer;
+import com.flowpowered.caustic.software.OutBuffer;
+import com.flowpowered.caustic.software.ShaderImplementation;
+import com.flowpowered.caustic.software.Uniform;
 import com.flowpowered.math.matrix.Matrix4f;
 import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.math.vector.Vector4f;
-
-import org.spout.renderer.api.data.VertexAttribute.DataType;
-import org.spout.renderer.api.gl.Shader.ShaderType;
-import org.spout.renderer.software.DataFormat;
-import org.spout.renderer.software.InBuffer;
-import org.spout.renderer.software.OutBuffer;
-import org.spout.renderer.software.ShaderImplementation;
-import org.spout.renderer.software.Uniform;
 
 public class LightingVertexShader extends ShaderImplementation {
     private static final DataFormat[] OUTPUT = {

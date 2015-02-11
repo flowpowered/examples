@@ -23,12 +23,11 @@
  */
 package com.flowpowered.examples.caustic;
 
+import com.flowpowered.caustic.api.gl.Shader.ShaderType;
+import com.flowpowered.caustic.software.InBuffer;
+import com.flowpowered.caustic.software.OutBuffer;
+import com.flowpowered.caustic.software.ShaderImplementation;
 import com.flowpowered.math.vector.Vector3f;
-
-import org.spout.renderer.api.gl.Shader.ShaderType;
-import org.spout.renderer.software.InBuffer;
-import org.spout.renderer.software.OutBuffer;
-import org.spout.renderer.software.ShaderImplementation;
 
 public class LightingFragmentShader extends ShaderImplementation {
     @Override
